@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tsilavina.taskmanager.entity.User;
+import com.tsilavina.taskmanager.dto.UserRequestDTO;
+import com.tsilavina.taskmanager.dto.UserResponseDTO;
 import com.tsilavina.taskmanager.service.UserService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -23,17 +26,17 @@ public class UserController {
   }
 
   @GetMapping
-  public List<User> getUsers() {
+  public List<UserResponseDTO> getUsers() {
     return userService.getAllUsers();
   }
 
   @PostMapping
-  public User createUser(@RequestBody User user) {
-    return userService.createUser(user);
+  public UserResponseDTO createUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
+    return userService.createUser(userRequestDTO);
   }
 
   @GetMapping("/{id}")
-  public User getUserById(@PathVariable int id) {
+  public UserResponseDTO getUserById(@PathVariable int id) {
     return userService.getUserById(id);
   }
 
